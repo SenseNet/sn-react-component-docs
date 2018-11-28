@@ -7,12 +7,14 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { withMarkdownNotes } from '@storybook/addon-notes';
 import { withInfo } from "@storybook/addon-info";
 import { checkA11y } from '@storybook/addon-a11y'
-import { AdvancedSearch, PresetField, ReferenceField, TextField } from "@sensenet/search-react/src";
+import { AdvancedSearch, PresetField, ReferenceField, TextField, TypeField } from "@sensenet/search-react/src";
 import { Query } from "@sensenet/query";
 import { withActions } from '@storybook/addon-actions/dist/preview'
 import { action } from "@storybook/addon-actions";
 import { FormControl, InputLabel } from "@material-ui/core";
 import { GenericContent } from "@sensenet/default-content-types/src";
+import { User, Folder, PortalSettings } from "@sensenet/default-content-types";
+import { Repository } from "@sensenet/client-core";
 
 
 addDecorator(muiTheme())
@@ -21,6 +23,7 @@ const advancedSearchNotes = require('../notes/search/AdvancedSearch.md')
 const presetFieldNotes = require('../notes/search/PresetField.md')
 const referenceFieldNotes = require('../notes/search/ReferenceField.md')
 const textFieldNotes = require('../notes/search/TextField.md')
+const typeFieldNotes = require('../notes/search/TypeField.md')
 
 storiesOf('Search', module).addDecorator(withKnobs).addDecorator(withInfo()).addDecorator(checkA11y)
     .addDecorator(withActions("queryChange", "fetchItems"))
@@ -76,7 +79,7 @@ storiesOf('Search', module).addDecorator(withKnobs).addDecorator(withInfo()).add
                 }]
             }}
             onQueryChange={action("onQueryChange")}
-            helperText={'Type something to filter'}
+            helperText={'Type something to search'}
             id="reference-filter"
         />}
     />))
@@ -85,12 +88,25 @@ storiesOf('Search', module).addDecorator(withKnobs).addDecorator(withInfo()).add
         onQueryChanged={action("queryChanged")}
         fields={() =>
             <TextField
+                placeholder="Type something to filter...."
                 fieldName="DisplayName"
                 onQueryChange={action("onQueryChange")}
             />
         }
     />))
-    .add("Type field", () => <div>Alma</div>)
+    .add("Type field", withMarkdownNotes(typeFieldNotes)(() => <AdvancedSearch
+        schema={null as any}
+        onQueryChanged={action("queryChanged")}
+        fields={() =>
+            <TypeField
+                placeholder="Select a content type"
+                style={{ minWidth: "250px" }}
+                schemaStore={new Repository().schemas}
+                types={[User, Folder, PortalSettings]}
+                onQueryChange={action("onQueryChange")}
+            />
+        }
+    />))
     .add("Showcase",
         () => (
             <ExampleApp />
