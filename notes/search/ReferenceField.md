@@ -2,10 +2,10 @@
 
 The reference field can be used as an autocomplete field to pick from a list of content.
 
-```ts
+```tsx
 <AdvancedSearch
     schema={null as any}
-    fields={() => <ReferenceField<GenericContent>
+    fields={(options) => <ReferenceField<GenericContent>
         fieldName="CreatedBy"
         fieldSetting={{
             Name: "Created By",
@@ -17,7 +17,7 @@ The reference field can be used as an autocomplete field to pick from a list of 
             /** your logic to retrieve the fetched content based on the provided query */
             return [...]
         }}
-        onQueryChange={action("onQueryChange")}
+        onQueryChange={options.updateQuery}
         helperText={'Type something to filter'}
         id="reference-filter"
     />}
