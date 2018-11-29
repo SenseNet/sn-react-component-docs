@@ -19,6 +19,8 @@ import { Repository } from "@sensenet/client-core";
 
 addDecorator(muiTheme())
 
+const showcaseNotes = require('../notes/search/Showcase.md')
+
 const advancedSearchNotes = require('../notes/search/AdvancedSearch.md')
 const presetFieldNotes = require('../notes/search/PresetField.md')
 const referenceFieldNotes = require('../notes/search/ReferenceField.md')
@@ -27,6 +29,11 @@ const typeFieldNotes = require('../notes/search/TypeField.md')
 
 storiesOf('Search', module).addDecorator(withKnobs).addDecorator(withInfo()).addDecorator(checkA11y)
     .addDecorator(withActions("queryChange", "fetchItems"))
+    .add("Showcase", withMarkdownNotes(showcaseNotes)(
+        () => (
+            <ExampleApp />
+        ),
+    ))
     .add("Advanced Search container component", withMarkdownNotes(advancedSearchNotes)(() => <AdvancedSearch
         schema={null}
         onQueryChanged={action("queryChange")}
@@ -107,8 +114,3 @@ storiesOf('Search', module).addDecorator(withKnobs).addDecorator(withInfo()).add
             />
         }
     />))
-    .add("Showcase",
-        () => (
-            <ExampleApp />
-        ),
-    )
