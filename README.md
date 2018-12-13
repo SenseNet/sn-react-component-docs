@@ -1,2 +1,5 @@
 # sn-react-component-docs
-UI components for building apps upon sensenet implemented in React
+
+------
+### This package is not under active development. You can find our latest packages in the [sensenset/sn-client](https://github.com/sensenet/sn-client) monorepo.
+------
